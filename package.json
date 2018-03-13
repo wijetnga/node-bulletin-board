@@ -1,0 +1,34 @@
+{
+  "name": "bulletin-board",
+  "version": "1.0.0",
+  "description": "This is demo application",
+  "main": "server.js",
+  "dependencies": {
+    "assert": "^1.4.1",
+    "errorhandler": "^1.5.0",
+    "method-override": "^2.3.10",
+    "request": "^2.85.0",
+    "bootstrap": "^3.3.6",
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "morgan": "^1.6.1",
+    "vue": "^1.0.10",
+    "vue-resource": "^0.1.17"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bdpiparva/node-bulletin-board.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bdpiparva/node-bulletin-board/issues"
+  },
+  "homepage": "https://github.com/bdpiparva/node-bulletin-board#readme",
+  "devDependencies": {
+    "mocha": "^5.0.4"
+  }
+}
