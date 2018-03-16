@@ -1,10 +1,11 @@
-var express = require('express'),
+const express = require('express'),
 	bodyParser = require('body-parser'),
 	methodOverride = require('method-override'),
 	errorHandler = require('errorhandler'),
 	morgan = require('morgan'),
 	routes = require('./backend'),
-	api = require('./backend/api');
+	UUIDGenerator = require('uuid/v4'),
+	eventService = new require('./backend/event_service')(UUIDGenerator);
 
 var app = module.exports = express();
 
@@ -29,9 +30,20 @@ if ('production' == app.get('env')) {
 }
 
 app.get('/bulletin-board', routes.index);
-app.get('/bulletin-board/api/events', api.events);
-app.post('/bulletin-board/api/events', api.event);
-app.delete('/bulletin-board/api/events/:eventId', api.event);
+
+app.get('/bulletin-board/api/events', function (req, res) {
+	res.json(eventService.getAllEvents())
+});
+
+app.post('/bulletin-board/api/event', function (req, res) {
+	eventService.addEvent(req.body);
+	res.json(eventService.getAllEvents());
+});
+
+app.delete('/bulletin-board/api/event/:eventId', function (req, res) {
+	const result = eventService.deleteEvent(req.params.eventId);
+	res.json({message: result ? 'Event successfully deleted.' : `Event with id ${req.params.eventId} does not exist.`});
+});
 
 const server = app.listen(8080);
 app.shutdown = function () {

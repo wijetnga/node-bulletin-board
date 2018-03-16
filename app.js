@@ -26,10 +26,9 @@ const eventService = {
 
 		addEvent: function () {
 			if (this.event.title.trim()) {
-				this.$http.post('/bulletin-board/api/events', this.event)
+				this.$http.post('/bulletin-board/api/event', this.event)
 					.success(function (res) {
 						this.events.push(this.event);
-						console.log('Event added!');
 					})
 					.error(function (err) {
 						console.log(err);
@@ -39,10 +38,9 @@ const eventService = {
 
 		deleteEvent: function (id) {
 			if (confirm('Are you sure you want to delete this event?')) {
-				this.$http.delete('/bulletin-board/api/events/' + id)
+				this.$http.delete('/bulletin-board/api/event/' + id)
 					.success(function (res) {
-						console.log(res);
-						var index = this.events.find(x => x.id === id)
+						var index = this.events.findIndex(x => x.id === id);
 						this.events.splice(index, 1);
 					})
 					.error(function (err) {
