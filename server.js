@@ -14,8 +14,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(methodOverride());
-app.use(express.static(__dirname + '/'));
-app.use('/build', express.static('public'));
+app.use('/bulletin-board', express.static(__dirname + '/'));
 
 var env = process.env.NODE_ENV;
 if ('development' == env) {
@@ -29,14 +28,14 @@ if ('production' == app.get('env')) {
 	app.use(errorHandler());
 }
 
-app.get('/', routes.index);
-app.get('/api/events', api.events);
-app.post('/api/events', api.event);
-app.delete('/api/events/:eventId', api.event);
+app.get('/bulletin-board', routes.index);
+app.get('/bulletin-board/api/events', api.events);
+app.post('/bulletin-board/api/events', api.event);
+app.delete('/bulletin-board/api/events/:eventId', api.event);
 
 const server = app.listen(8080);
 app.shutdown = function () {
 	console.log("Shutting down...")
 	server.close();
 };
-console.log('Magic happens on port 8080...');
+console.log('Server started on port 8080...');

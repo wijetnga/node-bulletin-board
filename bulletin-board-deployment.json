@@ -1,0 +1,43 @@
+{
+  "apiVersion": "apps/v1",
+  "kind": "Deployment",
+  "metadata": {
+    "labels": {
+      "app": "bulletin-board"
+    },
+    "name": "bulletin-board-deployment"
+  },
+  "spec": {
+    "replicas": 1,
+    "selector": {
+      "matchLabels": {
+        "app": "bulletin-board"
+      }
+    },
+    "template": {
+      "metadata": {
+        "labels": {
+          "app": "bulletin-board"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "command": [
+              "npm",
+              "start"
+            ],
+            "image": "#{image}",
+            "name": "bulletin-board",
+            "ports": [
+              {
+                "containerPort": 8080,
+                "protocol": "TCP"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
