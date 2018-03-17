@@ -25,28 +25,43 @@
 	</div>
 </nav>
 
-<div class="container-fluid" id="events" style="margin-top: 70px;">
-	<div class="col-sm-7">
-		<div class="panel panel-default">
-			<div class="panel-heading">Add an event</div>
+<div class="sub-nav">
+	<button type="button" class="btn btn-info" data-toggle="modal" data-target="#add-event-modal">Add event</button>
+</div>
+
+<div class="container-fluid" id="events" style="margin-top: 110px;">
+	<div class="row">
+		<div class="panel panel-default list" v-for="event in events">
+			<div class="panel-heading">{{ event.title }}</div>
 			<div class="panel-body">
-				<div>
-					<input class="form-control" placeholder="Title" v-model="event.title">
-					<textarea class="form-control" placeholder="Detail" v-model="event.detail"></textarea>
-					<input type="date" class="form-control" placeholder="Date" v-model="event.date">
-					<button class="btn btn-primary" v-on:click="addEvent">Submit</button>
+				<p class="list-group-item-text" v-if="event.detail">{{ event.detail }}</p>
+			</div>
+			<div class="panel-footer">
+				<div style="float: right"><i class="glyphicon glyphicon-calendar" v-if="event.date"></i> {{
+					event.date }}
 				</div>
+				<button class="btn btn-xs btn-danger" v-on:click="deleteEvent(event.id)">Delete</button>
 			</div>
 		</div>
 	</div>
-	<div class="col-sm-5">
-		<div class="list-group">
-			<a href="#" class="list-group-item" v-for="event in events">
-				<h4 class="list-group-item-heading"><i class="glyphicon glyphicon-bullhorn"></i> {{ event.title }}</h4>
-				<h5><i class="glyphicon glyphicon-calendar" v-if="event.date"></i> {{ event.date }}</h5>
-				<p class="list-group-item-text" v-if="event.detail">{{ event.detail }}</p>
-				<button class="btn btn-xs btn-danger" v-on:click="deleteEvent(event.id)">Delete</button>
-			</a>
+
+	<div id="add-event-modal" class="modal fade" role="dialog">
+		<div class="modal-dialog" style="width: 80%;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Add an event</h4>
+				</div>
+				<div class="modal-body">
+					<input class="form-control" placeholder="Title" v-model="event.title"/>
+					<textarea class="form-control" placeholder="Detail" v-model="event.detail" rows="7"></textarea>
+					<input type="date" class="form-control" placeholder="Date" v-model="event.date"/>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" v-on:click="addEvent">Add</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -54,5 +69,7 @@
 </body>
 <script src="node_modules/vue/dist/vue.min.js"></script>
 <script src="node_modules/vue-resource/dist/vue-resource.min.js"></script>
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="app.js"></script>
 </html>

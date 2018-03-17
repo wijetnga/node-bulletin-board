@@ -17,18 +17,24 @@ const eventService = {
 			this.$http.get('/bulletin-board/api/events')
 				.success(function (events) {
 					this.$set('events', events);
-					console.log(events);
 				})
 				.error(function (err) {
 					console.log(err);
 				});
 		},
 
-		addEvent: function () {
+		addEvent: function (e) {
 			if (this.event.title.trim()) {
 				this.$http.post('/bulletin-board/api/event', this.event)
 					.success(function (res) {
-						this.events.push(this.event);
+						this.events.push({
+							id: this.event.id,
+							title: this.event.title,
+							detail: this.event.detail,
+							date: this.event.date
+						});
+						$(".form-control").val('');
+						$('#add-event-modal').modal('hide');
 					})
 					.error(function (err) {
 						console.log(err);
