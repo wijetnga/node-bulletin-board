@@ -20,17 +20,16 @@ status_code=$(curl -sSk -H "Authorization: Bearer $KUBE_TOKEN" \
 if [ $status_code == 200 ]; then
   echo
   echo "Updating deployment"
-  curl  -H 'Content-Type: application/strategic-merge-patch+json' -sSk -H "Authorization: Bearer $KUBE_TOKEN" \
+  curl --fail -H 'Content-Type: application/strategic-merge-patch+json' -sSk -H "Authorization: Bearer $KUBE_TOKEN" \
     "https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/apis/apps/v1beta2/namespaces/$NAMESPACE/deployments/bulletin-board-deployment" \
     -X PATCH -d @bulletin-board-deployment.json
 else
  echo
  echo "Creating deployment"
- curl  -H 'Content-Type: application/json' -sSk -H "Authorization: Bearer $KUBE_TOKEN" \
+ curl --fail -H 'Content-Type: application/json' -sSk -H "Authorization: Bearer $KUBE_TOKEN" \
     "https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/apis/apps/v1beta2/namespaces/$NAMESPACE/deployments" \
     -X POST -d @bulletin-board-deployment.json
 fi
-
 
 status_code=$(curl -sSk -H "Authorization: Bearer $KUBE_TOKEN" \
     "https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/api/v1/namespaces/$NAMESPACE/services/bulletin-board-service" \
@@ -39,7 +38,7 @@ status_code=$(curl -sSk -H "Authorization: Bearer $KUBE_TOKEN" \
 if [ $status_code == 404 ]; then
  echo
  echo "Creating service"
- curl  -H 'Content-Type: application/json' -sSk -H "Authorization: Bearer $KUBE_TOKEN" \
+ curl --fail -H 'Content-Type: application/json' -sSk -H "Authorization: Bearer $KUBE_TOKEN" \
     "https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/api/v1/namespaces/$NAMESPACE/services" \
     -X POST -d @bulletin-board-service.json
 fi
@@ -51,7 +50,7 @@ status_code=$(curl -sSk -H "Authorization: Bearer $KUBE_TOKEN" \
 if [ $status_code == 404 ]; then
  echo
  echo "Creating ingress"
- curl  -H 'Content-Type: application/json' -sSk -H "Authorization: Bearer $KUBE_TOKEN" \
+ curl --fail -H 'Content-Type: application/json' -sSk -H "Authorization: Bearer $KUBE_TOKEN" \
     "https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/apis/extensions/v1beta1/namespaces/$NAMESPACE/ingresses" \
     -X POST -d @bulletin-board-ingress.json
 fi
