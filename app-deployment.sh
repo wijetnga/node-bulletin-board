@@ -14,6 +14,8 @@ fi
 
 echo
 echo "Namespace $NAMESPACE"
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
 kubectl
 echo "curl -sSk -H Authorization: Bearer $KUBE_TOKEN https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/apis/apps/v1beta2/namespaces/$NAMESPACE/deployments/bulletin-board-deployment "
 
