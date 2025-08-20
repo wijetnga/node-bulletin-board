@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+set -x
 sed -i "s~#{image}~$ARTIFACT_IMAGE~g" bulletin-board-deployment.json
 
 if [ -z $KUBE_TOKEN ]; then
@@ -30,6 +30,10 @@ if [ $status_code == 200 ]; then
 else
  echo
  echo "Creating deployment"
+ echo "curl --fail -H 'Content-Type: application/json' -sSk -H "Authorization: Bearer $KUBE_TOKEN" \
+    "https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/apis/apps/v1beta2/namespaces/$NAMESPACE/deployments" \
+    -X POST -d @bulletin-board-deployment.json"
+    
  curl --fail -H 'Content-Type: application/json' -sSk -H "Authorization: Bearer $KUBE_TOKEN" \
     "https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/apis/apps/v1beta2/namespaces/$NAMESPACE/deployments" \
     -X POST -d @bulletin-board-deployment.json
