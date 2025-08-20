@@ -18,7 +18,7 @@ curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stabl
 #sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
 chmod +x kubectl
-./kubectl
+./kubectl get no
 echo "curl -sSk -H Authorization: Bearer $KUBE_TOKEN https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/apis/apps/v1beta2/namespaces/$NAMESPACE/deployments/bulletin-board-deployment "
 
 status_code=$(curl -sSk -H "Authorization: Bearer $KUBE_TOKEN" \
