@@ -27,7 +27,7 @@
               "npm",
               "start"
             ],
-            "image": "#{image}",
+            "image": "wijetnga/bulletin-board:9",
             "name": "bulletin-board",
             "ports": [
               {
