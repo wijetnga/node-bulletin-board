@@ -14,6 +14,7 @@ fi
 
 echo
 echo "Namespace $NAMESPACE"
+kubectl
 echo "curl -sSk -H Authorization: Bearer $KUBE_TOKEN https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_PORT_443_TCP_PORT/apis/apps/v1beta2/namespaces/$NAMESPACE/deployments/bulletin-board-deployment "
 
 status_code=$(curl -sSk -H "Authorization: Bearer $KUBE_TOKEN" \
